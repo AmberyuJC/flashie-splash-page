@@ -29,7 +29,39 @@
    - 点击 "Save"
    - 等待几分钟，GitHub会生成一个URL
 
-## 方法二：使用命令行
+## 方法二：使用命令行（SSH方式）
+
+### 前提条件：配置SSH密钥
+
+如果你还没有配置SSH密钥，请先执行以下步骤：
+
+1. **生成SSH密钥**
+   ```bash
+   ssh-keygen -t ed25519 -C "your_email@example.com"
+   ```
+
+2. **启动SSH代理**
+   ```bash
+   eval "$(ssh-agent -s)"
+   ```
+
+3. **添加SSH密钥到代理**
+   ```bash
+   ssh-add ~/.ssh/id_ed25519
+   ```
+
+4. **复制公钥**
+   ```bash
+   cat ~/.ssh/id_ed25519.pub
+   ```
+
+5. **添加到GitHub**
+   - 访问 https://github.com/settings/keys
+   - 点击 "New SSH key"
+   - 粘贴公钥内容
+   - 点击 "Add SSH key"
+
+### 部署步骤
 
 1. **初始化Git仓库**
    ```bash
@@ -42,9 +74,9 @@
    - 在GitHub上创建新仓库
    - 不要初始化README、.gitignore或license
 
-3. **推送到GitHub**
+3. **推送到GitHub（SSH方式）**
    ```bash
-   git remote add origin https://github.com/你的用户名/仓库名.git
+   git remote add origin git@github.com:AmberyuJC/flashie-splash-page.git
    git branch -M main
    git push -u origin main
    ```
@@ -52,12 +84,21 @@
 4. **启用GitHub Pages**
    - 按照方法一的步骤4操作
 
+### 验证SSH连接
+
+在推送之前，可以测试SSH连接：
+```bash
+ssh -T git@github.com
+```
+
+如果看到 "Hi 你的用户名! You've successfully authenticated..." 就说明SSH配置成功。
+
 ## 访问你的网站
 
 部署完成后，你可以通过以下URL访问你的网站：
 `https://你的用户名.github.io/仓库名/`
 
-例如：`https://johndoe.github.io/flashie-splash-page/`
+例如：`https://AmberyuJC.github.io/flashie-splash-page/`
 
 ## 注意事项
 
